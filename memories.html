@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memories</title>
+  <link rel="stylesheet" href="memories.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fef9e7;
+      color: #444;
+    }
+
+    #memoriesCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(135deg, #fffdf7 0%, #fef9e7 100%);
+    }
+
+    .navbar {
+      background-color: #fff;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #f8b500;
+      font-weight: bold;
+    }
+
+    .navbar a:hover, .navbar a.active {
+      color: #ff6f00;
+    }
+
+    .memories {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 36px;
+      color: #e65100;
+      margin-bottom: 40px;
+    }
+
+    .memory-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .memory-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      overflow: hidden;
+      width: 300px;
+      transition: transform 0.3s;
+    }
+
+    .memory-card:hover {
+      transform: scale(1.03);
+    }
+
+    .memory-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .memory-card p {
+      padding: 15px;
+      font-style: italic;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="memoriesCanvas"></canvas>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="memories.html" class="active">Memories</a></li>
+      <li><a href="timeline.html">Timeline</a></li>
+      <li><a href="letters.html" class="active">Letters to You</a></li>
+    </ul>
+  </nav>
+
+  <section class="memories">
+    <h1 class="title">Unforgettable Moments</h1>
+    <div class="memory-grid">
+      <div class="memory-card">
+        <img src="images/photo1.jpg" alt="Memory 1">
+        <p>"The smile on your face lit up the whole room that day!"</p>
+      </div>
+      <div class="memory-card">
+        <img src="images/photo2.jpg" alt="Memory 2">
+        <p>"From surprise cakes to shared laughter, every moment was golden."</p>
+      </div>
+      <div class="memory-card">
+        <img src="images/photo3.jpg" alt="Memory 3">
+        <p>"You deserve all the happiness in the world – and you spread it, too."</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const canvas = document.getElementById("memoriesCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let width = canvas.width;
+    let height = canvas.height;
+
+    window.addEventListener("resize", () => {
+      canvas.width = width = window.innerWidth;
+      canvas.height = height = window.innerHeight;
+    });
+
+    const colors = ["#ffe0e0", "#fff8b3", "#e6f7ff", "#fbd1ff"];
+    const orbs = [];
+
+    class Orb {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.r = 20 + Math.random() * 30;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.alpha = 0.2 + Math.random() * 0.3;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < -this.r || this.x > width + this.r || this.y < -this.r || this.y > height + this.r) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    for (let i = 0; i < 40; i++) orbs.push(new Orb());
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      orbs.forEach(orb => {
+        orb.update();
+        orb.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

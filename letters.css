@@ -1,0 +1,74 @@
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: linear-gradient(135deg, #fff1f8, #ffe0e0);
+  color: #444;
+}
+
+.navbar {
+  background-color: #fff;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #d81b60;
+  font-weight: bold;
+}
+
+.navbar a:hover, .navbar a.active {
+  color: #ad1457;
+}
+
+.letters {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.letters h1 {
+  text-align: center;
+  font-size: 36px;
+  color: #c2185b;
+  margin-bottom: 40px;
+}
+
+.letter {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease;
+}
+
+.letter h2 {
+  margin-bottom: 15px;
+  color: #e91e63;
+}
+
+.letter p {
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

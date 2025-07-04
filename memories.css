@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fef9e7;
+  color: #444;
+}
+
+.navbar {
+  background-color: #fff;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #f8b500;
+  font-weight: bold;
+}
+
+.navbar a:hover, .navbar a.active {
+  color: #ff6f00;
+}
+
+.memories {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 36px;
+  color: #e65100;
+  margin-bottom: 40px;
+}
+
+.memory-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.memory-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  overflow: hidden;
+  width: 300px;
+  transition: transform 0.3s;
+}
+
+.memory-card:hover {
+  transform: scale(1.03);
+}
+
+.memory-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.memory-card p {
+  padding: 15px;
+  font-style: italic;
+  font-size: 16px;
+}
+#memoriesCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(135deg, #fffdf7 0%, #fef9e7 100%);
+}
+

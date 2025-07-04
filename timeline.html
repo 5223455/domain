@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Timeline - Birthday Memories</title>
+  <link rel="stylesheet" href="timeline.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdf6e3;
+      overflow-x: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 15px 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 40px;
+      padding: 0;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #f57c00;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .navbar a.active,
+    .navbar a:hover {
+      color: #d84315;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 60px 30px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 300px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .caption {
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="timelineCanvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><a href="timeline.html" class="active">Timeline</a></li>
+     <li><a href="letters.html" class="active">Letters to You</a></li>
+    </ul>
+  </nav>
+
+  <!-- Timeline / Gallery Section -->
+  <section class="gallery">
+    <div class="card">
+      <img src="images/photo5.jpg" alt="Memory 1">
+      <p class="caption">First birthday surprise celebration at home 🎂</p>
+    </div>
+    <div class="card">
+      <img src="images/photo6.jpg" alt="Memory 2">
+      <p class="caption">College friends making it unforgettable 💖</p>
+    </div>
+    <div class="card">
+      <img src="images/photo7.jpg" alt="Memory 3">
+      <p class="caption">Midnight cake smash party 🎉</p>
+    </div>
+    <div class="card">
+      <img src="images/photo8.jpg" alt="Memory 4">
+      <p class="caption">The moment with family under fairy lights ✨</p>
+    </div>
+   
+  </section>
+
+  <!-- Canvas Animation Script -->
+  <script>
+    const canvas = document.getElementById("timelineCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const colors = ["#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF", "#FFADAD"];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 1;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.speedY = (Math.random() - 0.5) * 1.5;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    initParticles();
+    animate();
+  </script>
+</body>
+</html>
